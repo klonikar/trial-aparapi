@@ -146,16 +146,16 @@ public class AparapiTrial {
     }
     
     public static class ReducerKernel extends Kernel {
-    	private float[] a;
+    	private long[] a;
     	private int[] iterationNo;
-    	private float[] output;
+    	private long[] output;
     	
     	public ReducerKernel() {
 			super();
 			setExplicit(true);
 		}
 
-    	public ReducerKernel setA(float[] val) {
+    	public ReducerKernel setA(long[] val) {
     		this.a = val;
     		return this;
     	}
@@ -165,7 +165,7 @@ public class AparapiTrial {
     		return this;
     	}
 
-    	public ReducerKernel setOutput(float[] val) {
+    	public ReducerKernel setOutput(long[] val) {
     		this.output = val;
     		return this;
     	}
@@ -191,23 +191,23 @@ public class AparapiTrial {
 
     private static void executeOnDevice() {
         ReducerKernel kernel = new ReducerKernel();
-        float[] vector = new float[1 << 20];
+        long[] vector = new long[1 << 20];
         for(int i = 0;i < vector.length;i++) {
-        	vector[i] = (float) (i+1);
+        	vector[i] = (long) (i+1);
         }
     	//kernel.setExecutionMode(EXECUTION_MODE.JTP);
     	System.out.println("Execution mode: " + kernel.getExecutionMode());
     	long t1 = System.currentTimeMillis();
-    	float sum = 0.0f;
+    	long sum = 0;
     	for(int i = 0;i < vector.length;i++) {
     		sum += vector[i];
     	}
     	long t2 = System.currentTimeMillis();
     	System.out.println("Raw computed sum: " + ((long) sum) + ", time " + (t2-t1) + "ms");
     	// compute a dummy sum to compile the kernel
-    	float[] output = new float[] { 0.0f };
+    	long[] output = new long[] { 0 };
     	{
-    		float[] a = new float[] { 1.0f };
+    		long[] a = new long[] { 1 };
     		int[] iterNo = new int[] { 0, a.length, 2, 1, 1 };
     		kernel.setA(a).setOutput(output).setIterationNo(iterNo).put(a).put(output).put(iterNo).execute(1);
     	}
