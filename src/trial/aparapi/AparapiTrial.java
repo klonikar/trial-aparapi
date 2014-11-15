@@ -191,7 +191,7 @@ public class AparapiTrial {
 
     private static void executeOnDevice() {
         ReducerKernel kernel = new ReducerKernel();
-        long[] vector = new long[1 << 20];
+        long[] vector = new long[1 << 23];
         for(int i = 0;i < vector.length;i++) {
         	vector[i] = (long) (i+1);
         }
@@ -213,7 +213,7 @@ public class AparapiTrial {
     	}
         long t1_g = System.currentTimeMillis();
         // send parameters and execute, copy the OpenCL-hosted array back to RAM
-        int localBatchSize = 64;
+        int localBatchSize = 8;
         double logLength = Math.log(vector.length), logBatchSize = Math.log((double) localBatchSize); 
         int maxIters = (int) (logLength/logBatchSize);
         if(Math.abs(logLength - maxIters*logBatchSize) > 0.0001)
