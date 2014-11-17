@@ -2,8 +2,12 @@ package trial.aparapi;
 
 import com.amd.aparapi.Kernel;
 
-//javac -g -cp lib/aparapi.jar -d . src/trial/aparapi/Reducer.java
-//java -cp lib/aparapi.jar;. -Djava.library.path=lib trial.aparapi.Reducer
+//javac -g -cp lib/aparapi.jar -d bin src/trial/aparapi/Reducer.java
+//windows:
+//java -cp lib/aparapi.jar;bin -Djava.library.path=lib trial.aparapi.Reducer
+//linux:
+//java -cp lib/aparapi.jar:bin -Djava.library.path=lib trial.aparapi.Reducer
+
 public class Reducer {
 
     public static class ReducerKernel extends Kernel {
@@ -101,7 +105,10 @@ public class Reducer {
         	}
         	iterationNo[0] = iter;
         	iterationNo[3] = iterationMultiplier;
+        	long t1_step_g = System.currentTimeMillis();
 	        kernel.setIterationNo(iterationNo).put(iterationNo).execute(kernelRange);
+	        long t2_step_g = System.currentTimeMillis();
+	        System.out.println("Device " + kernel.getExecutionMode() + " time diff: " + (t2_step_g-t1_step_g) + " ms");
         }
         kernel.get(output);
 		long t2_g = System.currentTimeMillis();

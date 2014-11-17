@@ -13,8 +13,12 @@ import static java.lang.Math.exp;
 import com.amd.aparapi.Kernel;
 import com.amd.aparapi.Kernel.EXECUTION_MODE;
 
-//javac -g -cp lib/aparapi.jar -d . src/trial/aparapi/AparapiTrial.java
-//java -cp lib/aparapi.jar;. -Djava.library.path=lib trial.aparapi.AparapiTrial 1000000
+//javac -g -cp lib/aparapi.jar -d bin src/trial/aparapi/AparapiTrial.java
+// windows:
+//java -cp lib/aparapi.jar;bin -Djava.library.path=lib trial.aparapi.AparapiTrial 1000000
+// linux:
+//java -cp lib/aparapi.jar:bin -Djava.library.path=lib trial.aparapi.AparapiTrial 1000000
+
 public class AparapiTrial {
     public static final double ABSOLUTE_FLOAT_ERROR_TOLERANCE = 2e-4;
     public static final double RELATIVE_FLOAT_ERROR_TOLERANCE = 5e-8;
